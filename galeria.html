@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galería - Las Muñoz</title>
+  <meta name="description" content="Conoce nuestro trabajo a través de nuestra galería de proyectos realizados." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/icons/logo.svg" />
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: { primary: '#7C9885', 'primary-dark': '#5F7A6A', 'primary-light': '#A8C5A0', secondary: '#F5E6D3', accent: '#C9A961', 'accent-dark': '#A88945' },
+        fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+      }}
+    };
+  </script>
+  <style>
+    .filter-btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid #E5E7EB;
+      background: white;
+      color: #6B7280;
+    }
+    .filter-btn.active {
+      background: #7C9885;
+      color: white;
+      border-color: #7C9885;
+    }
+    .filter-btn:hover:not(.active) {
+      border-color: #7C9885;
+      color: #7C9885;
+    }
+    .gallery-item.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- NAVBAR -->
+  <nav class="navbar fixed top-0 left-0 right-0 z-50 py-4">
+    <div class="container mx-auto px-4 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 text-dark"><img src="assets/img/icons/logo.svg" alt="Las Muñoz" class="h-12 w-auto" /></a>
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="index.html" class="nav-link text-dark font-medium hover:text-primary">Inicio</a>
+          <a href="sobre-nosotros.html" class="nav-link text-dark font-medium hover:text-primary">Sobre Nosotros</a>
+          <a href="servicios.html" class="nav-link text-dark font-medium hover:text-primary">Servicios</a>
+          <a href="galeria.html" class="nav-link text-dark font-medium hover:text-primary">Galería</a>
+          <a href="clases.html" class="nav-link text-dark font-medium hover:text-primary">Clases</a>
+          <a href="precios.html" class="nav-link text-dark font-medium hover:text-primary">Precios</a>
+          <a href="contacto.html" class="btn btn-primary text-sm">Contacto</a>
+        </div>
+        <button class="mobile-menu-btn lg:hidden text-dark text-2xl"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-overlay"></div>
+  <div class="mobile-menu">
+    <button class="mobile-menu-close absolute top-6 right-6 text-2xl text-dark"><i class="fas fa-times"></i></button>
+    <div class="flex flex-col gap-6 mt-8">
+      <a href="index.html" class="text-dark font-semibold text-lg">Inicio</a>
+      <a href="sobre-nosotros.html" class="text-dark font-medium text-lg">Sobre Nosotros</a>
+      <a href="servicios.html" class="text-dark font-medium text-lg">Servicios</a>
+      <a href="galeria.html" class="text-dark font-medium text-lg">Galería</a>
+      <a href="clases.html" class="text-dark font-medium text-lg">Clases</a>
+      <a href="precios.html" class="text-dark font-medium text-lg">Precios</a>
+      <a href="contacto.html" class="text-dark font-medium text-lg">Contacto</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="pt-32 pb-20 bg-gradient-to-br from-primary to-primary-dark text-white">
+    <div class="container mx-auto px-4 lg:px-8 text-center">
+      <div class="animate-fadeInUp">
+        <span class="inline-block px-4 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-6">Portafolio</span>
+        <h1 class="font-serif text-5xl lg:text-7xl font-bold mb-6">Nuestra Galería</h1>
+        <p class="text-xl text-white/90 max-w-2xl mx-auto">
+          Descubre la calidad de nuestro trabajo a través de imágenes reales de nuestros proyectos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTROS -->
+  <section class="py-12 bg-light border-b border-gray-200">
+    <div class="container mx-auto px-4 lg:px-8">
+      <div class="flex flex-wrap justify-center gap-3" id="filter-buttons">
+        <button class="filter-btn active" data-filter="todos">Todos</button>
+        <button class="filter-btn" data-filter="residencial">Residencial</button>
+        <button class="filter-btn" data-filter="comercial">Comercial</button>
+        <button class="filter-btn" data-filter="antes-despues">Antes/Después</button>
+        <button class="filter-btn" data-filter="equipo">Equipo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="py-20 lg:py-32">
+    <div class="container mx-auto px-4 lg:px-8">
+      <div id="galeria-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Renderizado con JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+    <button class="lightbox-nav lightbox-prev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+    <img src="" alt="" id="lightbox-img" />
+    <button class="lightbox-nav lightbox-next" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-center">
+      <p id="lightbox-title" class="font-serif text-2xl font-bold"></p>
+      <p id="lightbox-counter" class="text-sm text-white/70 mt-1"></p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="py-20 bg-gradient-to-r from-primary-dark to-primary text-white">
+    <div class="container mx-auto px-4 lg:px-8 text-center reveal">
+      <h2 class="font-serif text-4xl lg:text-5xl font-bold mb-6">¿Te gustaría ver tu espacio así?</h2>
+      <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
+        Solicita tu cotización gratuita y comencemos a transformar tu espacio hoy mismo.
+      </p>
+      <a href="contacto.html" class="btn btn-accent">Cotizar Ahora <i class="fas fa-arrow-right ml-2"></i></a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-dark text-white py-16">
+    <div class="container mx-auto px-4 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div>
+          <img src="assets/img/icons/logo.svg" alt="Las Muñoz" class="h-14 mb-4 brightness-0 invert" />
+          <p class="text-gray-400 leading-relaxed">Expertos en ordenanza y aseo profesional. Transformamos espacios con calidad, confianza y compromiso.</p>
+          <div class="flex gap-3 mt-6">
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div><h3 class="font-bold text-lg mb-4">Navegación</h3><ul class="space-y-3 text-gray-400">
+          <li><a href="index.html" class="hover:text-primary transition">Inicio</a></li>
+          <li><a href="sobre-nosotros.html" class="hover:text-primary transition">Sobre Nosotros</a></li>
+          <li><a href="servicios.html" class="hover:text-primary transition">Servicios</a></li>
+          <li><a href="galeria.html" class="hover:text-primary transition">Galería</a></li>
+          <li><a href="precios.html" class="hover:text-primary transition">Precios</a></li>
+        </ul></div>
+        <div><h3 class="font-bold text-lg mb-4">Información</h3><ul class="space-y-3 text-gray-400">
+          <li><a href="clases.html" class="hover:text-primary transition">Clases</a></li>
+          <li><a href="contacto.html" class="hover:text-primary transition">Contacto</a></li>
+          <li><a href="privacidad.html" class="hover:text-primary transition">Privacidad</a></li>
+          <li><a href="terminos.html" class="hover:text-primary transition">Términos</a></li>
+        </ul></div>
+        <div><h3 class="font-bold text-lg mb-4">Contacto</h3><ul class="space-y-3 text-gray-400">
+          <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt text-primary mt-1"></i><span>Av. Las Flores 1234, Of. 502<br />Santiago, Chile</span></li>
+          <li class="flex items-center gap-3"><i class="fas fa-phone text-primary"></i><a href="tel:+56987654321" class="hover:text-primary transition">+56 9 8765 4321</a></li>
+          <li class="flex items-center gap-3"><i class="fas fa-envelope text-primary"></i><a href="mailto:contacto@lasmunoz.cl" class="hover:text-primary transition">contacto@lasmunoz.cl</a></li>
+          <li class="flex items-center gap-3"><i class="fas fa-clock text-primary"></i><span>Lun-Vie: 7:00 - 19:00</span></li>
+        </ul></div>
+      </div>
+      <hr class="border-white/10 mb-8" />
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
+        <p>&copy; 2024 Las Muñoz. Todos los derechos reservados.</p>
+        <p>Diseñado con <i class="fas fa-heart text-accent"></i> para tu tranquilidad</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/56987654321" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+  <button class="scroll-top"><i class="fas fa-arrow-up"></i></button>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/gallery.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initGallery();
+    });
+  </script>
+</body>
+</html>
